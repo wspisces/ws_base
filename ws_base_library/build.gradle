@@ -1,0 +1,67 @@
+apply plugin: 'com.android.library'
+//apply plugin: 'com.jakewharton.butterknife'
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0.1"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+            res.srcDirs += "src/main/res-component"
+            res.srcDirs += "src/main/res-segmentview"
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    api fileTree(dir: "libs", include: ["*.jar"])
+
+    api 'androidx.multidex:multidex:2.0.1'
+    api 'com.google.android.material:material:1.2.1'
+    //适配器
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
+    /**网络请求**/
+    api "com.squareup.retrofit2:retrofit:2.6.2"
+    api "com.squareup.retrofit2:converter-gson:2.6.1"
+    api "com.squareup.retrofit2:adapter-rxjava2:2.6.1"
+    api 'com.squareup.okhttp3:logging-interceptor:3.12.0'
+
+    /** rx相关 **/
+    api "io.reactivex.rxjava2:rxandroid:2.1.1"
+    api "io.reactivex.rxjava2:rxjava:2.2.10"
+
+    api 'com.google.code.gson:gson:2.8.6'
+    api 'org.greenrobot:eventbus:3.1.1'
+    api 'org.xutils:xutils:3.8.9'
+    //api 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar'
+    //Toast
+    api 'com.github.GrenderG:Toasty:1.4.2'
+    api 'com.github.bumptech.glide:glide:4.11.0'
+    api 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    api 'androidx.constraintlayout:constraintlayout:2.0.1'
+    api 'androidx.cardview:cardview:1.0.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
+    //api('com.yanzhenjie:permission:2.0.0-rc10', { exclude group: 'com.android.support' })
+    //图片选择
+    api 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.8'
+    api 'com.orhanobut:logger:2.2.0'
+}
