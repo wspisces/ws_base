@@ -1,11 +1,10 @@
 apply plugin: 'com.android.library'
-//apply plugin: 'com.jakewharton.butterknife'
 android {
-    compileSdkVersion 28
+    compileSdkVersion var.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 28
+        minSdkVersion var.minSdkVersion
+        targetSdkVersion var.targetSdkVersion
         versionCode 1
         versionName "1.0.1"
         consumerProguardFiles "consumer-rules.pro"
@@ -36,6 +35,9 @@ dependencies {
 
     api 'androidx.multidex:multidex:2.0.1'
     api 'com.google.android.material:material:1.2.1'
+    api 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    api 'androidx.constraintlayout:constraintlayout:2.0.1'
+    api 'androidx.cardview:cardview:1.0.0'
     //适配器
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
     /**网络请求**/
@@ -55,11 +57,7 @@ dependencies {
     //Toast
     api 'com.github.GrenderG:Toasty:1.4.2'
     api 'com.github.bumptech.glide:glide:4.11.0'
-    api 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
-    api 'androidx.constraintlayout:constraintlayout:2.0.1'
-    api 'androidx.cardview:cardview:1.0.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
-
     //api('com.yanzhenjie:permission:2.0.0-rc10', { exclude group: 'com.android.support' })
     //图片选择
     api 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.8'

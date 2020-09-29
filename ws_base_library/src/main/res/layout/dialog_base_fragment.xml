@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <com.heinqi.support.views.RefreshDialogView
+    <com.ws.support.views.RefreshDialogView
         android:id="@+id/base_view_rdv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

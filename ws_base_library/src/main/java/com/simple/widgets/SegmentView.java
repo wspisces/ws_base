@@ -32,7 +32,7 @@ import android.view.LayoutInflater;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.heinqi.base.R;
+import com.ws.base.R;
 
 import java.util.List;
 
