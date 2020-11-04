@@ -13,6 +13,7 @@
     <attr name="fgColor" format="color" />
     <attr name="percent" format="float" />
     <attr name="startAngle" format="float" />
+
     <declare-styleable name="FormRowWithImage">
         <attr name="title" />
         <attr name="style" />
@@ -21,10 +22,12 @@
         <attr name="pwd" />
         <attr name="leading" format="reference" />
     </declare-styleable>
+
     <declare-styleable name="EmptyView">
         <attr name="msg" format="string" />
         <attr name="icon" />
     </declare-styleable>
+
     <declare-styleable name="FormRow">
         <attr name="title" />
         <attr name="style" />
@@ -37,9 +40,10 @@
         <attr name="title" />
         <attr name="style" />
         <attr name="hint" />
-        <attr name="content" />
+        <attr name="content"/>
         <attr name="maxlengh" />
     </declare-styleable>
+
     <declare-styleable name="MenuRow">
         <attr name="title" />
         <attr name="icon" />
@@ -51,7 +55,6 @@
     <declare-styleable name="MenuTemperature">
         <attr name="title" />
     </declare-styleable>
-
 
     <declare-styleable name="ColorfulRingProgressView">
         <attr name="bgColor" />

@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="@dimen/row_height"
     android:background="@color/white"
     android:descendantFocusability="beforeDescendants">
 
@@ -18,13 +18,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/ll"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="@dimen/cn_len_one"
+        android:layout_marginStart="@dimen/cn_len_one"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tv_title"
@@ -33,10 +33,9 @@
 
         <EditText
             android:id="@+id/et_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/cn_len_one"
-            android:layout_marginEnd="@dimen/cn_len_one"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingEnd="@dimen/cn_len_three"
             android:layout_weight="1"
             android:background="@null"
             android:gravity="right|center_vertical"
@@ -63,11 +62,13 @@
             android:id="@+id/iv_arrow"
             android:layout_width="@dimen/cn_len_one"
             android:layout_height="@dimen/cn_len_two"
+            android:layout_gravity="center_vertical|end"
+            android:layout_margin="@dimen/cn_len_one"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@mipmap/right_arrow_icon" />
-    </LinearLayout>
+    </FrameLayout>
 
     <Button
         android:id="@+id/btn_action"

@@ -32,7 +32,8 @@ import com.ws.support.utils.ToastUtils;
  * 2020/6/29 17:57
  * 修改人：ws
  */
-public class InputDialogFragment extends DialogFragment {
+public class InputDialogFragment extends DialogFragment
+{
     TextView tvTitle;
     Button   btnCancel, btnOk;
     EditText                      et;
@@ -43,10 +44,12 @@ public class InputDialogFragment extends DialogFragment {
     OnInputDialogFragmentListener listener;
     boolean                       cancelable     = true;
 
-    private InputDialogFragment() {
+    private InputDialogFragment()
+    {
     }
 
-    public static InputDialogFragment newInstance(String title, String defaultContent, String hint, String error, @NonNull OnInputDialogFragmentListener listener) {
+    public static InputDialogFragment newInstance(String title, String defaultContent, String hint, String error, @NonNull OnInputDialogFragmentListener listener)
+    {
         InputDialogFragment dialog = new InputDialogFragment();
         dialog.title = title;
         dialog.hint = hint;
@@ -56,7 +59,8 @@ public class InputDialogFragment extends DialogFragment {
         return dialog;
     }
 
-    public static InputDialogFragment newInstance(String title, String defaultContent, String hint, String error, boolean cancelable, @NonNull OnInputDialogFragmentListener listener) {
+    public static InputDialogFragment newInstance(String title, String defaultContent, String hint, String error, boolean cancelable, @NonNull OnInputDialogFragmentListener listener)
+    {
         InputDialogFragment dialog = new InputDialogFragment();
         dialog.title = title;
         dialog.hint = hint;
@@ -67,10 +71,22 @@ public class InputDialogFragment extends DialogFragment {
         return dialog;
     }
 
+    public static InputDialogFragment newInstance(String title, String hint, String error, boolean cancelable, @NonNull OnInputDialogFragmentListener listener)
+    {
+        InputDialogFragment dialog = new InputDialogFragment();
+        dialog.title = title;
+        dialog.hint = hint;
+        dialog.errorMsg = error;
+        dialog.defaultContent = "";
+        dialog.cancelable = cancelable;
+        dialog.listener = listener;
+        return dialog;
+    }
 
     @NonNull
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    public Dialog onCreateDialog(Bundle savedInstanceState)
+    {
         Dialog dialog = new Dialog(getActivity(), R.style.Dialog_Fullscreen_Bottom);
         //dialog.setCanceledOnTouchOutside(true);
         //dialog.setCancelable(true);
@@ -81,13 +97,15 @@ public class InputDialogFragment extends DialogFragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
+    {
         View view = inflater.inflate(R.layout.dialog_input, container, false);
         tvTitle = view.findViewById(R.id.tv_title);
         et = view.findViewById(R.id.et);
         et.setHint(hint);
         et.setText(defaultContent);
-        if (defaultContent.length() > 0) {
+        if (defaultContent.length() > 0)
+        {
             et.setSelection(defaultContent.length());
         }
         btnCancel = view.findViewById(R.id.btn_cancel);
@@ -114,27 +132,34 @@ public class InputDialogFragment extends DialogFragment {
         return view;
     }
 
-    public void show(@NonNull FragmentManager manager) {
+    public void show(@NonNull FragmentManager manager)
+    {
         show(manager, "InputDialogFragment");
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState)
+    {
         super.onActivityCreated(savedInstanceState);
-        btnCancel.setOnClickListener(view -> {
+        btnCancel.setOnClickListener(view ->
+        {
             listener.onCancel(this);
         });
-        btnOk.setOnClickListener(view -> {
-            if (et.getText().length() > 0) {
+        btnOk.setOnClickListener(view ->
+        {
+            if (et.getText().length() > 0)
+            {
                 listener.onCommit(this, et.getText().toString());
-            } else {
+            } else
+            {
                 if (StringUtils.isNotEmptyWithNull(errorMsg))
                     ToastUtils.error(errorMsg);
             }
         });
     }
 
-    public interface OnInputDialogFragmentListener {
+    public interface OnInputDialogFragmentListener
+    {
         void onCommit(DialogFragment dialogFragment, String str);
 
         void onCancel(DialogFragment dialogFragment);

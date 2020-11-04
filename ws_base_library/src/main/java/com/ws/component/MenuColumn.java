@@ -39,8 +39,16 @@ public class MenuColumn extends ConstraintLayout {
     private View      mView;
     private Button    mBtn;
     private ImageView iv;
-    private TextView  tv;
 
+    public ImageView getIv() {
+        return iv;
+    }
+
+    public TextView getTv() {
+        return tv;
+    }
+
+    private TextView tv;
     public MenuColumn(Context context) {
         super(context);
     }
@@ -58,15 +66,7 @@ public class MenuColumn extends ConstraintLayout {
     public void setListener(OnMenuClickListener listener) {
         this.listener = listener;
     }
-
-    public ImageView getIv() {
-        return iv;
-    }
-
-    public TextView getTv() {
-        return tv;
-    }
-
+    
     private void init(Context context, AttributeSet attrs) {
         mContext = context;
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

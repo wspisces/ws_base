@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.5"
-        android:layout_marginBottom="@dimen/cn_len_four"
+        android:layout_marginBottom="@dimen/cn_len_eight"
         app:srcCompat="@mipmap/no_data" />
 
     <TextView
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/cn_len_two"
-        android:text="暂无数据"
+        android:text="暂无数据\n点击刷新"
         android:textColor="@color/text_color_666"
         android:textSize="@dimen/text_size_normal"
         app:layout_constraintEnd_toEndOf="parent"

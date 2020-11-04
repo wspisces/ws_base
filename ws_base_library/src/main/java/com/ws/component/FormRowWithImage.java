@@ -24,10 +24,10 @@ import com.ws.base.R;
  * 修改人：ws
  */
 public class FormRowWithImage extends ConstraintLayout {
-    private Button              btnAction;
-    private ImageView           ivUser;
-    private ImageView           ivLeading;
-    private TextView            tvTitle;
+    private Button                 btnAction;
+    private ImageView              ivUser;
+    private ImageView              ivLeading;
+    private TextView               tvTitle;
     private EditText            etContent;
     private OnFormClickListener listener;
 
