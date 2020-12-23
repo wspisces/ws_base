@@ -13,6 +13,33 @@
     <attr name="fgColor" format="color" />
     <attr name="percent" format="float" />
     <attr name="startAngle" format="float" />
+    <attr name="leading" format="reference" />
+    <attr name="imeOptions">
+        <flag name="normal" value="0x00000000" />
+        <flag name="actionUnspecified" value="0x00000000" />
+        <flag name="actionNone" value="0x00000001" />
+        <flag name="actionGo" value="0x00000002" />
+        <flag name="actionSearch" value="0x00000003" />
+        <flag name="actionSend" value="0x00000004" />
+        <flag name="actionNext" value="0x00000005" />
+        <flag name="actionDone" value="0x00000006" />
+        <flag name="actionPrevious" value="0x00000007" />
+        <flag name="flagNoPersonalizedLearning" value="0x1000000" />
+        <flag name="flagNoFullscreen" value="0x2000000" />
+        <flag name="flagNavigatePrevious" value="0x4000000" />
+        <flag name="flagNavigateNext" value="0x8000000" />
+        <flag name="flagNoExtractUi" value="0x10000000" />
+        <flag name="flagNoAccessoryAction" value="0x20000000" />
+        <flag name="flagNoEnterAction" value="0x40000000" />
+        <flag name="flagForceAscii" value="0x80000000" />
+    </attr>
+    <declare-styleable name="FormRowNoTitle">
+        <attr name="style" />
+        <attr name="hint" />
+        <attr name="maxlengh" />
+        <attr name="pwd" />
+        <attr name="leading" />
+    </declare-styleable>
 
     <declare-styleable name="FormRowWithImage">
         <attr name="title" />
@@ -20,7 +47,8 @@
         <attr name="hint" />
         <attr name="maxlengh" />
         <attr name="pwd" />
-        <attr name="leading" format="reference" />
+        <attr name="leading" />
+        <attr name="content" />
     </declare-styleable>
 
     <declare-styleable name="EmptyView">
@@ -34,13 +62,26 @@
         <attr name="hint" />
         <attr name="maxlengh" />
         <attr name="pwd" />
+        <attr name="content" />
         <attr name="input" />
+        <attr name="imeOptions" />
     </declare-styleable>
+
+    <declare-styleable name="FormRowInput">
+        <attr name="title" />
+        <attr name="hint" />
+        <attr name="maxlengh" />
+        <attr name="pwd" />
+        <attr name="content" />
+        <attr name="input" />
+        <attr name="imeOptions" />
+    </declare-styleable>
+
     <declare-styleable name="FormColum">
         <attr name="title" />
         <attr name="style" />
         <attr name="hint" />
-        <attr name="content"/>
+        <attr name="content" />
         <attr name="maxlengh" />
     </declare-styleable>
 
@@ -62,5 +103,17 @@
         <attr name="strokeWidth" format="dimension" />
         <attr name="percent" />
         <attr name="startAngle" />
+    </declare-styleable>
+
+    <declare-styleable name="CodeEditText">
+        <attr name="box" format="integer" />
+        <attr name="child_h_padding" format="dimension" />
+        <attr name="child_v_padding" format="dimension" />
+        <attr name="child_width" format="dimension" />
+        <attr name="child_height" format="dimension" />
+        <attr name="padding" format="dimension" />
+        <attr name="box_bg_focus" format="reference" />
+        <attr name="box_bg_normal" format="reference" />
+        <attr name="inputType" format="string" />
     </declare-styleable>
 </resources>

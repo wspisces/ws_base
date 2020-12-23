@@ -27,7 +27,6 @@ import com.ws.support.network.NetworkManager;
 import com.ws.support.widget.MyProgressDialogFragment;
 
 import org.greenrobot.eventbus.EventBus;
-import org.xutils.DbManager;
 
 import java.util.concurrent.TimeUnit;
 
@@ -47,7 +46,6 @@ public abstract class BaseActivity extends BaseFragmentActivity {
     protected FrameLayout              mContentLayout;
     protected Context                  mContext;
     protected InputMethodManager       imm;
-    protected DbManager                dbManager;
 
     private   BaseActivity             mThis;
 
@@ -156,8 +154,6 @@ public abstract class BaseActivity extends BaseFragmentActivity {
     private void initData_() {
         mContext = this;
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        dbManager = BaseApplication.mDbManager;
-        //CnBaseApplication.getInstance().addActivity(this);
     }
 
     protected void setRegisterTopStyle() {

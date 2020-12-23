@@ -1,5 +1,6 @@
 package com.ws.support.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
@@ -124,4 +125,28 @@ public class ScreenUtils
 
 	}
 
+
+	/**
+	 * @ 获取当前手机屏幕的尺寸(单位:像素)
+	 */
+	public static float getPingMuSize(Context mContext) { int densityDpi = mContext.getResources().getDisplayMetrics().densityDpi;
+		float scaledDensity = mContext.getResources().getDisplayMetrics().scaledDensity;
+		float density = mContext.getResources().getDisplayMetrics().density;
+		float xdpi = mContext.getResources().getDisplayMetrics().xdpi;
+		float ydpi = mContext.getResources().getDisplayMetrics().ydpi;
+		int width = mContext.getResources().getDisplayMetrics().widthPixels;
+		int height = mContext.getResources().getDisplayMetrics().heightPixels;
+
+		// 这样可以计算屏幕的物理尺寸
+		float width2 = (width / xdpi)*(width / xdpi);
+		float height2 = (height / ydpi)*(width / xdpi);
+
+		return (float) Math.sqrt(width2+height2);
+	}
+
+	public static int getDPI(Activity mContext){
+		DisplayMetrics dm = new DisplayMetrics();
+		mContext.getWindowManager().getDefaultDisplay().getMetrics(dm);
+		return (int) (dm.density*160);
+	}
 }

@@ -3,10 +3,8 @@ package com.ws.support.base;
 import androidx.multidex.MultiDexApplication;
 
 
+import com.ws.support.http.HttpHelper;
 import com.ws.support.utils.MyFileUtils;
-
-import org.xutils.DbManager;
-import org.xutils.x;
 
 import es.dmoral.toasty.Toasty;
 import retrofit2.Retrofit;
@@ -22,7 +20,6 @@ import retrofit2.Retrofit;
 public class BaseApplication extends MultiDexApplication
 {
 
-    public static  DbManager       mDbManager;
     public static  Retrofit        retrofit;
     private static BaseApplication mInstance;
 
@@ -36,15 +33,14 @@ public class BaseApplication extends MultiDexApplication
     {
         super.onCreate();
         mInstance = this;
-        x.Ext.init(this);
         MyFileUtils.initPath();
         //监听App状态
         this.registerActivityLifecycleCallbacks(new AppLifecycleCallback());
         Toasty.Config.getInstance()
                 .tintIcon(true) // optional (apply textColor also to the icon)
                 //.setToastTypeface(@NonNull Typeface typeface) // optional
-                //.setTextSize(int sizeInSp) // optional
-                //.allowQueue(boolean allowQueue) // optional (prevents several Toastys from queuing)
+                .setTextSize(16) // optional
+                .allowQueue(true) // optional (prevents several Toastys from queuing)
                 .apply(); // required
     }
 }

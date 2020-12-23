@@ -17,6 +17,8 @@ import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.github.ybq.android.spinkit.sprite.Sprite;
+import com.github.ybq.android.spinkit.style.DoubleBounce;
 import com.ws.base.R;
 
 import java.util.Objects;
@@ -43,8 +45,11 @@ public class MyProgressDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_progress_fragment, container, false);
-        progressBar = view.findViewById(R.id.progress);
-        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getActivity(),R.color.colorPrimary), PorterDuff.Mode.MULTIPLY);
+        //progressBar = view.findViewById(R.id.progress);
+        //progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getActivity(),R.color.colorPrimary), PorterDuff.Mode.MULTIPLY);
+        //Sprite doubleBounce = new DoubleBounce();
+        //progressBar.setIndeterminateDrawable(doubleBounce);
+
         tv = view.findViewById(R.id.tv_status);
         tv.setText(msg);
         if (msg.isEmpty()){
@@ -62,8 +67,9 @@ public class MyProgressDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        //Dialog dialog = super.onCreateDialog(savedInstanceState);
         //设置actionbar的隐藏
+        Dialog dialog = new Dialog(getContext(), R.style.theme_dialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);

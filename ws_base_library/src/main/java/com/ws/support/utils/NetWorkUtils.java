@@ -133,25 +133,23 @@ public class NetWorkUtils {
         if (connectivity == null) {
             return false;
         } else {
-            @SuppressLint("MissingPermission") NetworkInfo[] info = connectivity.getAllNetworkInfo();
+            NetworkInfo[] info = connectivity.getAllNetworkInfo();
             if (info != null) {
                 for (int i = 0; i < info.length; i++) {
                     if (info[i].getState() == NetworkInfo.State.CONNECTED) {
                         NetworkInfo netWorkInfo = info[i];
                         if (netWorkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
-                            return true;
+                            return netWorkInfo.isAvailable();
                         } else if (netWorkInfo.getType() == ConnectivityManager.TYPE_MOBILE) {
-                            return true;
+                            return netWorkInfo.isAvailable();
                         } else if (netWorkInfo.getType() == ConnectivityManager.TYPE_ETHERNET) {
-                            return true;
+                            return netWorkInfo.isAvailable();
                         }
                     }
                 }
             }
         }
-
         return false;
-
     }
 
     public static String getIP(Context context) {

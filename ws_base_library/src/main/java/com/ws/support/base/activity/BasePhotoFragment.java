@@ -5,7 +5,6 @@ import android.content.pm.ActivityInfo;
 import androidx.core.content.ContextCompat;
 
 import com.ws.base.R;
-import com.ws.support.base.fragment.BaseFragment;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.animators.AnimationType;
 import com.luck.picture.lib.config.PictureConfig;
@@ -14,6 +13,7 @@ import com.luck.picture.lib.style.PictureCropParameterStyle;
 import com.luck.picture.lib.style.PictureParameterStyle;
 import com.luck.picture.lib.style.PictureWindowAnimationStyle;
 import com.luck.picture.lib.tools.SdkVersionUtils;
+import com.ws.support.base.fragment.BaseFragment;
 
 /**
  * 照片选择基类
@@ -22,12 +22,14 @@ import com.luck.picture.lib.tools.SdkVersionUtils;
  * 2020/6/30 16:39
  * 修改人：ws
  */
-public abstract class BasePhotoFragment extends BaseFragment {
+public abstract class BasePhotoFragment extends BaseFragment
+{
     //照片选择相关
     private PictureParameterStyle     mPictureParameterStyle;
     private PictureCropParameterStyle mCropParameterStyle;
 
-    protected void getDefaultStyle() {
+    protected void getDefaultStyle()
+    {
         // 相册主题
         mPictureParameterStyle = new PictureParameterStyle();
         // 是否改变状态栏字体颜色(黑白切换)
@@ -37,9 +39,9 @@ public abstract class BasePhotoFragment extends BaseFragment {
         // 是否开启类似QQ相册带数字选择风格
         mPictureParameterStyle.isOpenCheckNumStyle = false;
         // 相册状态栏背景色
-        mPictureParameterStyle.pictureStatusBarColor =  ContextCompat.getColor(mContext, R.color.colorPrimary);
+        mPictureParameterStyle.pictureStatusBarColor = ContextCompat.getColor(mContext, R.color.colorPrimary);
         // 相册列表标题栏背景色
-        mPictureParameterStyle.pictureTitleBarBackgroundColor =  ContextCompat.getColor(mContext, R.color.colorPrimary);
+        mPictureParameterStyle.pictureTitleBarBackgroundColor = ContextCompat.getColor(mContext, R.color.colorPrimary);
         // 相册父容器背景色
         mPictureParameterStyle.pictureContainerBackgroundColor = ContextCompat.getColor(mContext, R.color.white);
         // 相册列表标题栏右侧上拉箭头
@@ -91,7 +93,8 @@ public abstract class BasePhotoFragment extends BaseFragment {
                 mPictureParameterStyle.isChangeStatusBarFontColor);
     }
 
-    protected void startPickerPhoto(){
+    protected void startPickerPhoto()
+    {
         getDefaultStyle();
         // 进入相册 以下是例子：不需要的api可以不写
         PictureSelector.create(this)
@@ -176,7 +179,7 @@ public abstract class BasePhotoFragment extends BaseFragment {
                 //.scaleEnabled(false)// 裁剪是否可放大缩小图片
                 //.videoQuality()// 视频录制质量 0 or 1
                 .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
-                //.forResult(new MyResultCallback(mAdapter));
+        //.forResult(new MyResultCallback(mAdapter));
     }
 
 /*    @Override

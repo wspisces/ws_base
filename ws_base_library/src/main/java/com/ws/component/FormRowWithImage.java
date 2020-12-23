@@ -23,42 +23,57 @@ import com.ws.base.R;
  * 2020/8/13 15:31
  * 修改人：ws
  */
-public class FormRowWithImage extends ConstraintLayout {
-    private Button                 btnAction;
-    private ImageView              ivUser;
-    private ImageView              ivLeading;
-    private TextView               tvTitle;
+public class FormRowWithImage extends ConstraintLayout
+{
+    private Button              btnAction;
+    private ImageView           ivUser;
+    private ImageView           ivLeading;
+    private TextView            tvTitle;
     private EditText            etContent;
     private OnFormClickListener listener;
 
-    public FormRowWithImage(Context context) {
+    public FormRowWithImage(Context context)
+    {
         super(context);
     }
 
-    public FormRowWithImage(Context context, AttributeSet attrs) {
+    public FormRowWithImage(Context context, AttributeSet attrs)
+    {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public FormRowWithImage(Context context, AttributeSet attrs, int defStyleAttr) {
+    public FormRowWithImage(Context context, AttributeSet attrs, int defStyleAttr)
+    {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
 
-    public ImageView getUserImage() {
+    public ImageView getUserImage()
+    {
         return ivUser;
     }
 
-    public EditText getEt() {
+    public EditText getEt()
+    {
         return etContent;
     }
 
-    public void setListener(OnFormClickListener listener) {
+    public void setListener(OnFormClickListener listener)
+    {
         this.listener = listener;
         btnAction.setVisibility(VISIBLE);
+        btnAction.setOnClickListener(view ->
+        {
+            if (listener != null)
+            {
+                listener.onClick();
+            }
+        });
     }
 
-    private void init(Context context, AttributeSet attrs) {
+    private void init(Context context, AttributeSet attrs)
+    {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View mView = inflater.inflate(R.layout.form_row_image, this, true);
         ivUser = mView.findViewById(R.id.iv_user);
@@ -67,36 +82,38 @@ public class FormRowWithImage extends ConstraintLayout {
         tvTitle = mView.findViewById(R.id.tv_title);
         etContent = mView.findViewById(R.id.et_content);
         btnAction = mView.findViewById(R.id.btn_action);
-        btnAction.setOnClickListener(view -> {
-            if (listener != null) {
-                listener.onClick();
-            }
-        });
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.FormRowWithImage);
         tvTitle.setText(a.getString(R.styleable.FormRowWithImage_title));
         String hint = a.getString(R.styleable.FormRowWithImage_hint);
         int leadingImage = a.getResourceId(R.styleable.FormRowWithImage_leading, 0);
         ivLeading.setImageResource(leadingImage);
         etContent.setHint(hint);
+        String content = a.getString(R.styleable.FormRowWithImage_content);
+        etContent.setText(content);
         int type = a.getInt(R.styleable.FormRowWithImage_style, 0);
         ivUser.setVisibility(GONE);
-        if (type == 0) {//默认输入
+        if (type == 0)
+        {//默认输入
             int max = a.getInt(R.styleable.FormRowWithImage_maxlengh, -1); //最大输入字符
             boolean isPwd = a.getBoolean(R.styleable.FormRowWithImage_pwd, false);
             ivArrow.setVisibility(INVISIBLE);
             etContent.setEnabled(true);
             if (max > 0)
                 etContent.setFilters(new InputFilter[]{new InputFilter.LengthFilter(max)});
-            if (isPwd) {
+            if (isPwd)
+            {
                 //etContent.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD|InputType.TYPE_CLASS_TEXT);
                 etContent.setTransformationMethod(PasswordTransformationMethod.getInstance());
             }
-        } else if (type == 1) {//头像选择
+        } else if (type == 1)
+        {//头像选择
             ivUser.setVisibility(VISIBLE);
             etContent.setEnabled(false);
-        } else if (type == 2) {//弹窗
+        } else if (type == 2)
+        {//弹窗
             etContent.setEnabled(false);
-        } else if (type == 3) {//信息展示
+        } else if (type == 3)
+        {//信息展示
             etContent.setEnabled(false);
             ivArrow.setVisibility(INVISIBLE);
         }
@@ -104,17 +121,20 @@ public class FormRowWithImage extends ConstraintLayout {
 
     }
 
-    public String getContent() {
+    public String getContent()
+    {
         return etContent.getText().toString();
     }
 
     //设置内容
-    public void setContent(String content) {
+    public void setContent(String content)
+    {
         etContent.setText(content);
     }
 
     //提示文字
-    public void setHintText(String hint) {
+    public void setHintText(String hint)
+    {
         etContent.setHint(hint);
     }
 }

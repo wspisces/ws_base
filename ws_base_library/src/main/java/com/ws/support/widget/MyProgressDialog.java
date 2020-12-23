@@ -34,8 +34,8 @@ public class MyProgressDialog extends Dialog {
     public static MyProgressDialog createProgrssDialog(Context context) {
         dialog = new MyProgressDialog(context, R.style.base_CommonDialog);
         dialog.setContentView(R.layout.dialog_progress);
-        ContentLoadingProgressBar progressBar = dialog.findViewById(R.id.progress);
-        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(context,R.color.colorPrimary), PorterDuff.Mode.MULTIPLY);
+        //ContentLoadingProgressBar progressBar = dialog.findViewById(R.id.progress);
+        //progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(context,R.color.colorPrimary), PorterDuff.Mode.MULTIPLY);
         Objects.requireNonNull(dialog.getWindow()).getAttributes().gravity = Gravity.CENTER;
         return dialog;
     }

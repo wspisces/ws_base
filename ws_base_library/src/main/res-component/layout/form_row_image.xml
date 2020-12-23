@@ -3,17 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:descendantFocusability="beforeDescendants">
 
     <ImageView
         android:id="@+id/iv_leading"
+        android:layout_width="@dimen/cn_len_three"
+        android:layout_height="@dimen/cn_len_three"
         android:layout_marginStart="@dimen/cn_len_one"
-        android:layout_width="@dimen/cn_len_four"
-        android:layout_height="@dimen/cn_len_four"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/tv_title"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -77,7 +76,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@mipmap/right_arrow_icon" />
+            app:srcCompat="@drawable/ic_next"
+            app:tint="@android:color/white" />
     </LinearLayout>
 
     <Button
@@ -85,6 +85,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/btn_transparent"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
-import com.ws.support.base.listener.IActivityOperationCallback;
 import com.ws.support.utils.ToastUtils;
 import com.ws.support.widget.MyProgressDialogFragment;
 
@@ -34,7 +33,6 @@ public abstract class BaseFragment extends Fragment {
 
     private MyProgressDialogFragment mDialog;
 
-    private IActivityOperationCallback mIActivityOperationCallback;
 
     public static String TAG = "";
 
@@ -48,9 +46,7 @@ public abstract class BaseFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mContext = activity;
-        if (activity instanceof IActivityOperationCallback) {
-            mIActivityOperationCallback = (IActivityOperationCallback) activity;
-        }
+
     }
 
     /**

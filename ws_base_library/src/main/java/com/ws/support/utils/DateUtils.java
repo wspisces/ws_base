@@ -20,6 +20,7 @@ public class DateUtils {
      * 时间日期格式化到年月日.
      */
     public static String dateFormatYMD = "yyyy-MM-dd";
+    public static String dateFormatYMD2 = "yyyyMMdd";
 
     /**
      * 时间日期格式化到年月.
@@ -77,7 +78,10 @@ public class DateUtils {
      * 中文的年月日
      */
     public static String dateFormatYMD_CN = "yyyy年MM月dd日";
-
+    /**
+     * 中文的年月日
+     */
+    public static String dateFormatYMDHMS_CN = "yyyy年MM月dd日 HH:mm:ss EEEE";
     /**
      * 中文的年月
      */
@@ -191,7 +195,7 @@ public class DateUtils {
      * @return String String类型日期时间
      */
     public static String formatTimeByDate(Date date, String format) {
-        SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat(format);
+        SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat(format,Locale.getDefault());
         String strDate = null;
         try {
             strDate = mSimpleDateFormat.format(date);
@@ -292,7 +296,25 @@ public class DateUtils {
             throw new UnsupportedOperationException("只能转换Date和Long类型的数据");
         }
     }
-
+    /**
+     * 将时间数据转格式化为年月日（yyyyMdd）
+     *
+     * @param object 只能转换Date和Long类型的数据
+     * @return 转换为指定格式的数据 yyyyMMdd
+     */
+    public static String formatTimeToYMD2(Object object) {
+        if (object == null) {
+            throw new NullPointerException("转换数据不能为空");
+        } else if (object instanceof Date || object instanceof Long) {
+            if (object instanceof Date) {
+                return formatTimeByDate((Date) object, dateFormatYMD2);
+            } else {
+                return formatTimeByMillisecond((Long) object, dateFormatYMD2);
+            }
+        } else {
+            throw new UnsupportedOperationException("只能转换Date和Long类型的数据");
+        }
+    }
     /**
      * 将时间数据转格式化为年月日（yyyy-MM-dd）
      *

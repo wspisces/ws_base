@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
     android:descendantFocusability="beforeDescendants">
 
     <TextView
@@ -29,6 +28,7 @@
         android:singleLine="true"
         android:textColor="@color/text_color_333"
         android:textSize="@dimen/text_size_normal"
+        android:imeOptions="flagNoExtractUi"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/iv_arrow"
         app:layout_constraintStart_toEndOf="@+id/iv_arrow"
@@ -43,7 +43,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/right_arrow_icon" />
+        app:srcCompat="@drawable/ic_next" />
 
     <Button
         android:id="@+id/btn_action"

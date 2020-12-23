@@ -69,7 +69,9 @@ public abstract class BaseObserver<T> implements Observer<T>
             } else if (errorMsg.contains("Connection timed out"))
             {
                 ToastUtils.error("请求超时");
-            } else
+            } else if (errorMsg.contains("Unable to resolve host ")){
+                ToastUtils.error("请检查网络");
+            }else
             {
                 ToastUtils.error(errorMsg);
             }

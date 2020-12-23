@@ -3,6 +3,7 @@ package com.ws.support.base.activity;
 import android.content.pm.ActivityInfo;
 
 import androidx.core.content.ContextCompat;
+import androidx.databinding.ViewDataBinding;
 
 import com.ws.base.R;
 import com.luck.picture.lib.PictureSelector;
@@ -21,7 +22,7 @@ import com.luck.picture.lib.tools.SdkVersionUtils;
  * 2020/6/30 16:39
  * 修改人：ws
  */
-public abstract class BasePhotoActivity extends BaseActivity {
+public abstract class BasePhotoActivity<T extends ViewDataBinding> extends BaseViewDataBindActivity<T> {
     //照片选择相关
     private PictureParameterStyle     mPictureParameterStyle;
     private PictureCropParameterStyle mCropParameterStyle;
@@ -135,7 +136,7 @@ public abstract class BasePhotoActivity extends BaseActivity {
                 .isPreviewVideo(false)// 是否可预览视频
                 //.querySpecifiedFormatSuffix(PictureMimeType.ofJPEG())// 查询指定后缀格式资源
                 //.isEnablePreviewAudio(false) // 是否可播放音频
-                .isCamera(true)// 是否显示拍照按钮
+                .isCamera(false)// 是否显示拍照按钮
                 //.isMultipleSkipCrop(false)// 多图裁剪时是否支持跳过，默认支持
                 //.isMultipleRecyclerAnimation(false)// 多图裁剪底部列表显示动画效果
                 .isZoomAnim(true)// 图片列表点击 缩放效果 默认true
@@ -161,7 +162,7 @@ public abstract class BasePhotoActivity extends BaseActivity {
                 .showCropGrid(false)// 是否显示裁剪矩形网格 圆形裁剪时建议设为false
                 .isOpenClickSound(false)// 是否开启点击声音
                 //.selectionData()// 是否传入已选图片
-                //.isDragFrame(false)// 是否可拖动裁剪框(固定)
+                .isDragFrame(true)// 是否可拖动裁剪框(固定)
                 //.videoMinSecond(10)// 查询多少秒以内的视频
                 //.videoMaxSecond(15)// 查询多少秒以内的视频
                 //.recordVideoSecond(10)//录制视频秒数 默认60s

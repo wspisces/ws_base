@@ -10,7 +10,7 @@
     <dimen name="cn_horizontal_margin_item">16dp</dimen>
     <dimen name="cn_vertical_margin_item">4dp</dimen>
 
-    <dimen name="cn_btn_height">40dp</dimen>
+    <dimen name="cn_btn_height">44dp</dimen>
     <dimen name="cn_et_height">48dp</dimen>
 
     <dimen name="cn_btn_vertical_margin">4dp</dimen>

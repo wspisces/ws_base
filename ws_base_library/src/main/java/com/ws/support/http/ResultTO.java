@@ -2,6 +2,8 @@ package com.ws.support.http;
 
 
 import com.ws.support.utils.JsonUtils;
+import com.ws.support.utils.StringUtils;
+import com.ws.support.utils.ToastUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,4 +48,18 @@ public class ResultTO {
         return JsonUtils.toJson(this);
     }
 
+    public void showMsg(){
+        if (StringUtils.isNotEmptyWithNull(msg))
+        {
+            ToastUtils.info(msg);
+        }
+    }
+
+    public void showError()
+    {
+        if (StringUtils.isNotEmptyWithNull(msg))
+        {
+            ToastUtils.error(msg);
+        }
+    }
 }

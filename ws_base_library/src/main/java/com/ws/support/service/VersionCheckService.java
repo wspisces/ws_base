@@ -12,6 +12,7 @@ import com.ws.support.http.BaseObserver;
 import com.ws.support.http.HttpHelper;
 import com.ws.support.http.ResultTO;
 import com.ws.support.http._ApiUrl;
+import com.ws.support.utils.StringUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONObject;
@@ -30,6 +31,8 @@ import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static com.ws.support.http.HttpHelper.*;
 
 /**
  * 版本验证服务,升级
@@ -50,12 +53,12 @@ public class VersionCheckService extends IntentService
         super("VersionCheckService");
     }
 
-    //上报roomId
-    public static void startAction(Context context, int type)
+    public static void startAction(Context context, int type, int version)
     {
         Intent intent = new Intent(context, VersionCheckService.class);
         intent.setAction(ACTION);
         intent.putExtra("type", type);
+        intent.putExtra("version", version);
         context.startService(intent);
     }
 
@@ -71,17 +74,19 @@ public class VersionCheckService extends IntentService
             Logger.i("启动版本检查");
             final String action = intent.getAction();
             type = intent.getIntExtra("type", -1);
-            if (ACTION.equals(action) && type > 0)
+            int version = intent.getIntExtra("version", 0);
+
+            if (ACTION.equals(action) && type > 0 && version > 0)
             {
-                update();
+                update(version);
             }
         }
 
     }
 
-    private void update()
+    private void update(int version)
     {
-        HttpHelper.subscribe(HttpHelper.createService(_ApiUrl.class).GetCurrentVersion(), new BaseObserver<ResultTO>(this, false)
+        subscribe(createService(_ApiUrl.class).GetCurrentVersion(), new BaseObserver<ResultTO>(this, false)
         {
             @Override
             public void onSuccess(ResultTO o)
@@ -92,10 +97,14 @@ public class VersionCheckService extends IntentService
                     {
                         JSONObject result = o.toJsonObject();
                         int versionCode = result.optInt("verNo");
-                        if (BuildConfig.VERSION_CODE < versionCode)
+                        //if (BuildConfig.VERSION_CODE < versionCode)
+                        Logger.i("currentVersion=" + version + " serverVersion=" + versionCode);
+                        if (version < versionCode)
                         {
                             String downloadUrl = result.optString("downloadUrl");
-                            EventBus.getDefault().postSticky(NewVersionEvent.hasNew(true,type));
+                            if (StringUtils.isEmptyWithNull(downloadUrl)) return;
+                            Logger.i("downloadUrl=" + downloadUrl);
+                            EventBus.getDefault().postSticky(NewVersionEvent.hasNew(true, type));
                             downloadAPK(downloadUrl);
                         } else
                         {
@@ -104,7 +113,7 @@ public class VersionCheckService extends IntentService
                             {
                                 file.delete();//删除旧的APK
                             }
-                            EventBus.getDefault().postSticky(NewVersionEvent.hasNew(false,type));
+                            EventBus.getDefault().postSticky(NewVersionEvent.hasNew(false, type));
                         }
                     } catch (Exception e)
                     {
@@ -124,129 +133,125 @@ public class VersionCheckService extends IntentService
 
     private void downloadAPK(String downloadUrl)
     {
-        new Thread(new Runnable()
+        new Thread(() ->
         {
-            @Override
-            public void run()
-            {
-                EventBus.getDefault().postSticky(NewVersionEvent.downLoadStart(type));
-                //OK设置请求超时时间，读取超时时间
-                OkHttpClient client = new OkHttpClient.Builder()
-                        .connectTimeout(15, TimeUnit.SECONDS)
-                        .readTimeout(15, TimeUnit.SECONDS)
-                        .build();
-                Retrofit retrofit = new Retrofit.Builder().baseUrl("")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .client(client)
-                        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                        .build();
-                _ApiUrl apiService = retrofit.create(_ApiUrl.class);
-                //String url = "http://oa.tjpc.com.cn:8099/Content/App/android/heinqi_OA-release.apk";
-                Observable<ResponseBody> observable = apiService.download(downloadUrl);
-                observable.subscribeOn(Schedulers.io())
-                        .subscribe(new Observer<ResponseBody>()
+            EventBus.getDefault().postSticky(NewVersionEvent.downLoadStart(type));
+            //OK设置请求超时时间，读取超时时间
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(15, TimeUnit.SECONDS)
+                    .readTimeout(15, TimeUnit.SECONDS)
+                    .build();
+            Retrofit retrofit = new Retrofit.Builder().baseUrl("")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(client)
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .build();
+            _ApiUrl apiService = retrofit.create(_ApiUrl.class);
+            //String url = "http://oa.tjpc.com.cn:8099/Content/App/android/heinqi_OA-release.apk";
+            Observable<ResponseBody> observable = apiService.download(downloadUrl);
+            observable.subscribeOn(Schedulers.io())
+                    .subscribe(new Observer<ResponseBody>()
+                    {
+                        @Override
+                        public void onSubscribe(Disposable d)
                         {
-                            @Override
-                            public void onSubscribe(Disposable d)
-                            {
 
-                            }
+                        }
 
-                            @Override
-                            public void onNext(ResponseBody responseBody)
+                        @Override
+                        public void onNext(ResponseBody responseBody)
+                        {
+                            InputStream inputStream = null;
+                            long total = 0;
+                            long responseLength;
+                            FileOutputStream fos = null;
+                            try
                             {
-                                InputStream inputStream = null;
-                                long total = 0;
-                                long responseLength;
-                                FileOutputStream fos = null;
+                                byte[] buf = new byte[2048];
+                                int len;
+                                responseLength = responseBody.contentLength();
+                                inputStream = responseBody.byteStream();
+
+                                File dir = new File(mEnvironmentDirectory);
+                                if (!dir.exists())
+                                {
+                                    dir.mkdirs();
+                                }
+                                final File file = new File(path_apk);
+                                if (file.exists())
+                                {
+                                    file.delete();
+                                } else
+                                {
+                                    file.createNewFile();
+                                }
+                                fos = new FileOutputStream(file);
+                                int progress = 0;
+                                int lastProgress;
+                                long startTime = System.currentTimeMillis(); // 开始下载时获取开始时间
+                                while ((len = inputStream.read(buf)) != -1)
+                                {
+                                    fos.write(buf, 0, len);
+                                    total += len;
+                                    lastProgress = progress;
+                                    progress = (int) (total * 100 / responseLength);
+                                    long curTime = System.currentTimeMillis();
+                                    long usedTime = (curTime - startTime) / 1000;
+                                    if (usedTime == 0)
+                                    {
+                                        usedTime = 1;
+                                    }
+                                    long speed = (total / usedTime); // 平均每秒下载速度
+                                    // 如果进度与之前进度相等，则不更新，如果更新太频繁，则会造成界面卡顿
+                                    if (progress > 0 && progress != lastProgress)
+                                    {
+                                        Logger.e("VersionCheckService process=" + progress);
+                                    }
+                                }
+                                fos.flush();
+                                /*发送到主页*/
+                                EventBus.getDefault().postSticky(NewVersionEvent.downLoadFinish(type));
+                            } catch (final Exception e)
+                            {
+                                Logger.e("下载新版本", e);
+                                EventBus.getDefault().postSticky(NewVersionEvent.downLoadError(type));
+                            } finally
+                            {
                                 try
                                 {
-                                    byte[] buf = new byte[2048];
-                                    int len;
-                                    responseLength = responseBody.contentLength();
-                                    inputStream = responseBody.byteStream();
-
-                                    File dir = new File(mEnvironmentDirectory);
-                                    if (!dir.exists())
+                                    if (fos != null)
                                     {
-                                        dir.mkdirs();
+                                        fos.close();
                                     }
-                                    final File file = new File(path_apk);
-                                    if (file.exists())
+                                    if (inputStream != null)
                                     {
-                                        file.delete();
-                                    } else
-                                    {
-                                        file.createNewFile();
+                                        inputStream.close();
                                     }
-                                    fos = new FileOutputStream(file);
-                                    int progress = 0;
-                                    int lastProgress;
-                                    long startTime = System.currentTimeMillis(); // 开始下载时获取开始时间
-                                    while ((len = inputStream.read(buf)) != -1)
-                                    {
-                                        fos.write(buf, 0, len);
-                                        total += len;
-                                        lastProgress = progress;
-                                        progress = (int) (total * 100 / responseLength);
-                                        long curTime = System.currentTimeMillis();
-                                        long usedTime = (curTime - startTime) / 1000;
-                                        if (usedTime == 0)
-                                        {
-                                            usedTime = 1;
-                                        }
-                                        long speed = (total / usedTime); // 平均每秒下载速度
-                                        // 如果进度与之前进度相等，则不更新，如果更新太频繁，则会造成界面卡顿
-                                        if (progress > 0 && progress != lastProgress)
-                                        {
-                                            Logger.e("VersionCheckService process=" + progress);
-                                        }
-                                    }
-                                    fos.flush();
-                                    /*发送到主页*/
-                                    EventBus.getDefault().postSticky(NewVersionEvent.downLoadFinish(type));
-                                } catch (final Exception e)
+                                } catch (Exception e)
                                 {
-                                    Logger.e("下载新版本", e);
                                     EventBus.getDefault().postSticky(NewVersionEvent.downLoadError(type));
-                                } finally
-                                {
-                                    try
-                                    {
-                                        if (fos != null)
-                                        {
-                                            fos.close();
-                                        }
-                                        if (inputStream != null)
-                                        {
-                                            inputStream.close();
-                                        }
-                                    } catch (Exception e)
-                                    {
-                                        EventBus.getDefault().postSticky(NewVersionEvent.downLoadError(type));
-                                        e.printStackTrace();
-                                    }
-
+                                    e.printStackTrace();
                                 }
 
                             }
 
-                            @Override
-                            public void onError(Throwable e)
-                            {
-                                Logger.e("下载新版本", e);
-                                EventBus.getDefault().postSticky(NewVersionEvent.downLoadError(type));
-                            }
+                        }
 
-                            @Override
-                            public void onComplete()
-                            {
+                        @Override
+                        public void onError(Throwable e)
+                        {
+                            Logger.e("下载新版本", e);
+                            EventBus.getDefault().postSticky(NewVersionEvent.downLoadError(type));
+                        }
 
-                            }
-                        });
+                        @Override
+                        public void onComplete()
+                        {
+
+                        }
+                    });
 
 
-            }
         }).start();
     }
 }

@@ -8,6 +8,7 @@ import android.text.method.PasswordTransformationMethod;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -91,8 +92,13 @@ public class FormRow extends ConstraintLayout
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.FormRow);
         tvTitle.setText(a.getString(R.styleable.FormRow_title));
         String hint = a.getString(R.styleable.FormRow_hint);
-
         etContent.setHint(hint);
+        String content = a.getString(R.styleable.FormRow_content);
+        etContent.setText(content);
+
+        int imeType = a.getInt(R.styleable.FormRow_imeOptions, EditorInfo.IME_FLAG_NO_EXTRACT_UI);
+        //禁止横屏是全屏
+        etContent.setImeOptions(imeType);
         int type = a.getInt(R.styleable.FormRow_style, 0);
 
         ivUser.setVisibility(GONE);
@@ -114,30 +120,25 @@ public class FormRow extends ConstraintLayout
             if (inputType == 1)
             {//整数数字
                 etContent.setInputType(InputType.TYPE_CLASS_NUMBER);
-            } else
-                if (inputType == 2)
-                {//手机号
-                    etContent.setInputType(InputType.TYPE_CLASS_PHONE);
-                } else
-                    if (inputType == 3)
-                    {//邮箱地址
-                        etContent.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-                    }
-        } else
-            if (type == 1)
-            {//头像选择
-                ivUser.setVisibility(VISIBLE);
-                etContent.setEnabled(false);
-            } else
-                if (type == 2)
-                {//弹窗
-                    etContent.setEnabled(false);
-                } else
-                    if (type == 3)
-                    {//信息展示
-                        etContent.setEnabled(false);
-                        ivArrow.setVisibility(INVISIBLE);
-                    }
+            } else if (inputType == 2)
+            {//手机号
+                etContent.setInputType(InputType.TYPE_CLASS_PHONE);
+            } else if (inputType == 3)
+            {//邮箱地址
+                etContent.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+            }
+        } else if (type == 1)
+        {//头像选择
+            ivUser.setVisibility(VISIBLE);
+            etContent.setEnabled(false);
+        } else if (type == 2)
+        {//弹窗
+            etContent.setEnabled(false);
+        } else if (type == 3)
+        {//信息展示
+            etContent.setEnabled(false);
+            ivArrow.setVisibility(INVISIBLE);
+        }
         a.recycle();
 
     }
