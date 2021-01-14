@@ -40,6 +40,7 @@
         <item name="android:textSize">@dimen/text_size_normal</item>
     </style>
 
+
     <style name="btnRoundPrimary">
         <item name="android:background">@drawable/btn_round_primary</item>
         <item name="android:textColor">@color/white</item>
@@ -64,12 +65,23 @@
         <item name="android:textSize">@dimen/text_size_normal</item>
     </style>
 
+    <style name="btnEdgeAlert">
+        <item name="android:background">@drawable/btn_edge_alert</item>
+        <item name="android:textColor">@color/txt_color_alert</item>
+        <item name="android:textSize">@dimen/text_size_normal</item>
+    </style>
+
     <style name="btnEdgeWhite">
         <item name="android:background">@drawable/btn_edge_round_white</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/text_size_normal</item>
     </style>
-
+    <style name="btnDialogHolo">
+        <item name="android:background">@drawable/btn_dialog_holo</item>
+        <item name="android:textColor">@color/txt_color_dialog_holo</item>
+        <item name="android:textSize">@dimen/text_size_normal</item>
+        <item name="android:gravity">center</item>
+    </style>
     <style name="btnGray">
         <item name="android:background">@drawable/btn_gray</item>
         <item name="android:textColor">@color/white</item>
@@ -79,7 +91,22 @@
     <style name="CustomCheckBoxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/my_checkbox</item>
     </style>
+    <style name="HoloDialogStyle" parent="@android:style/Theme.Dialog">
 
+        <!-- 背景透明 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- 浮于Activity之上 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 边框 -->
+        <item name="android:windowFrame">@null</item>
+        <!-- Dialog以外的区域模糊效果 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!-- 无标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 半透明 -->
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
     <!-- 自定义仿IOS的ActionSheet底部Dialog的样式 ，有模糊效果 -->
     <style name="ActionSheetDialogStyle" parent="@android:style/Theme.Dialog">
 
@@ -104,6 +131,17 @@
     <style name="ActionSheetDialogAnimation" parent="@android:style/Animation.Dialog">
         <item name="android:windowEnterAnimation">@anim/actionsheet_dialog_in</item>
         <item name="android:windowExitAnimation">@anim/actionsheet_dialog_out</item>
+    </style>
+
+    <style name="CodeEdit">
+        <item name="android:inputType">numberSigned</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_marginStart">@dimen/cn_len_one</item>
+        <item name="android:background">@drawable/code_edit</item>
+        <item name="android:gravity">center</item>
+        <item name="android:maxLength">1</item>
+        <item name="android:singleLine">true</item>
     </style>
 
 

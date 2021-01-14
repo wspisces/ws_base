@@ -30,6 +30,7 @@ android {
             jniLibs.srcDirs = ['libs']
             res.srcDirs += "src/main/res-component"
             res.srcDirs += "src/main/res-segmentview"
+            res.srcDirs += "src/main/res-flowlayout"
         }
     }
     compileOptions {

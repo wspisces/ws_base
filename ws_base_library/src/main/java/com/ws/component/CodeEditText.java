@@ -32,31 +32,33 @@ import com.ws.base.R;
 public class CodeEditText extends ViewGroup
 {
 
-    private final static String TYPE_NUMBER = "number";
-    private final static String TYPE_TEXT = "text";
+    private final static String TYPE_NUMBER   = "number";
+    private final static String TYPE_TEXT     = "text";
     private final static String TYPE_PASSWORD = "password";
-    private final static String TYPE_PHONE = "phone";
+    private final static String TYPE_PHONE    = "phone";
 
-    private static final String                         TAG         = "VerificationCodeInput";
-    private              int                            box;
-    private              int                            boxWidth    = 120;
-    private              int                            boxHeight   = 120;
-    private int childHPadding = 14;
-    private int childVPadding = 14;
-    private              String                         inputType   = TYPE_PASSWORD;
-    private              Drawable                       boxBgFocus  = null;
-    private              Drawable                       boxBgNormal = null;
-    private              CodeEditText.Listener listener;
+    private static final String TAG           = "CodeEditText";
+    private final        int    box;
+    private              int    boxWidth      = 120;
+    private              int      boxHeight     = 120;
+    private              int      childHPadding = 14;
+    private              int      childVPadding = 14;
+    private              String   inputType     = TYPE_PASSWORD;
+    private              Drawable boxBgFocus    = null;
+    private              Drawable boxBgNormal   = null;
+    private              Listener listener;
+    private              int      width;
+    private              int      height;
 
 
-    public CodeEditText(Context context, AttributeSet attrs) {
+    public CodeEditText(Context context, AttributeSet attrs)
+    {
         super(context, attrs);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CodeEditText);
         box = a.getInt(R.styleable.CodeEditText_box, 6);
-
         childHPadding = (int) a.getDimension(R.styleable.CodeEditText_child_h_padding, 0);
         childVPadding = (int) a.getDimension(R.styleable.CodeEditText_child_v_padding, 0);
-        boxBgFocus =  a.getDrawable(R.styleable.CodeEditText_box_bg_focus);
+        boxBgFocus = a.getDrawable(R.styleable.CodeEditText_box_bg_focus);
         boxBgNormal = a.getDrawable(R.styleable.CodeEditText_box_bg_normal);
         inputType = a.getString(R.styleable.CodeEditText_inputType);
         boxWidth = (int) a.getDimension(R.styleable.CodeEditText_child_width, boxWidth);
@@ -67,35 +69,44 @@ public class CodeEditText extends ViewGroup
 
 
     @Override
-    protected void onAttachedToWindow() {
+    protected void onAttachedToWindow()
+    {
         super.onAttachedToWindow();
 
     }
 
     @Override
-    protected void onDetachedFromWindow() {
+    protected void onDetachedFromWindow()
+    {
         super.onDetachedFromWindow();
 
 
     }
 
-    private void initViews() {
-        TextWatcher textWatcher = new TextWatcher() {
+    private void initViews()
+    {
+        TextWatcher textWatcher = new TextWatcher()
+        {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            {
 
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
 
 
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-                if (s.length() == 0) {
-                } else {
+            public void afterTextChanged(Editable s)
+            {
+                if (s.length() == 0)
+                {
+                } else
+                {
                     focus();
                     checkAndCommit();
                 }
@@ -105,19 +116,23 @@ public class CodeEditText extends ViewGroup
         };
 
 
-
-        OnKeyListener onKeyListener = new OnKeyListener() {
+        OnKeyListener onKeyListener = new OnKeyListener()
+        {
             @Override
-            public synchronized boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_DEL) {
+            public synchronized boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+                if (keyCode == KeyEvent.KEYCODE_DEL)
+                {
                     backFocus();
                 }
                 return false;
             }
         };
+        width = this.getWidth();
+        height = this.getHeight();
 
-
-        for (int i = 0; i < box; i++) {
+        for (int i = 0; i < box; i++)
+        {
             EditText editText = new EditText(getContext());
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(boxWidth, boxHeight);
             layoutParams.bottomMargin = childVPadding;
@@ -132,29 +147,36 @@ public class CodeEditText extends ViewGroup
             editText.setGravity(Gravity.CENTER);
             editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(1)});
 
-            if (TYPE_NUMBER.equals(inputType)) {
+            if (TYPE_NUMBER.equals(inputType))
+            {
                 editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-            } else if (TYPE_PASSWORD.equals(inputType)){
+            } else if (TYPE_PASSWORD.equals(inputType))
+            {
                 editText.setTransformationMethod(PasswordTransformationMethod.getInstance());
-            } else if (TYPE_TEXT.equals(inputType)){
+            } else if (TYPE_TEXT.equals(inputType))
+            {
                 editText.setInputType(InputType.TYPE_CLASS_TEXT);
-            } else if (TYPE_PHONE.equals(inputType)){
+            } else if (TYPE_PHONE.equals(inputType))
+            {
                 editText.setInputType(InputType.TYPE_CLASS_PHONE);
             }
             editText.setId(i);
             editText.setEms(1);
             editText.addTextChangedListener(textWatcher);
             editText.setOnFocusChangeListener((view, b) -> setBg(editText, b));
-            addView(editText,i);
+            addView(editText, i);
         }
     }
 
-    private void backFocus() {
+    private void backFocus()
+    {
         int count = getChildCount();
-        EditText editText ;
-        for (int i = count-1; i>= 0; i--) {
+        EditText editText;
+        for (int i = count - 1; i >= 0; i--)
+        {
             editText = (EditText) getChildAt(i);
-            if (editText.getText().length() == 1) {
+            if (editText.getText().length() == 1)
+            {
                 editText.requestFocus();
                 editText.setSelection(1);
                 return;
@@ -162,44 +184,56 @@ public class CodeEditText extends ViewGroup
         }
     }
 
-    private void focus() {
+    private void focus()
+    {
         int count = getChildCount();
-        EditText editText ;
-        for (int i = 0; i< count; i++) {
+        EditText editText;
+        for (int i = 0; i < count; i++)
+        {
             editText = (EditText) getChildAt(i);
-            if (editText.getText().length() < 1) {
+            if (editText.getText().length() < 1)
+            {
                 editText.requestFocus();
                 return;
             }
         }
     }
 
-    private void setBg(EditText editText, boolean focus) {
-        if (boxBgNormal != null && !focus) {
+    private void setBg(EditText editText, boolean focus)
+    {
+        if (boxBgNormal != null && !focus)
+        {
             editText.setBackground(boxBgNormal);
-        } else if (boxBgFocus != null && focus) {
+        } else if (boxBgFocus != null && focus)
+        {
             editText.setBackground(boxBgFocus);
         }
     }
 
-    private void checkAndCommit() {
+    private void checkAndCommit()
+    {
         StringBuilder stringBuilder = new StringBuilder();
         boolean full = true;
-        for (int i = 0 ;i < box; i++){
+        for (int i = 0; i < box; i++)
+        {
             EditText editText = (EditText) getChildAt(i);
             String content = editText.getText().toString();
-            if ( content.length() == 0) {
+            if (content.length() == 0)
+            {
                 full = false;
                 break;
-            } else {
+            } else
+            {
                 stringBuilder.append(content);
             }
 
         }
         Log.d(TAG, "checkAndCommit:" + stringBuilder.toString());
-        if (full){
+        if (full)
+        {
 
-            if (listener != null) {
+            if (listener != null)
+            {
                 listener.onComplete(stringBuilder.toString());
                 setEnabled(false);
             }
@@ -208,45 +242,53 @@ public class CodeEditText extends ViewGroup
     }
 
     @Override
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(boolean enabled)
+    {
         int childCount = getChildCount();
 
-        for (int i = 0; i < childCount; i++) {
+        for (int i = 0; i < childCount; i++)
+        {
             View child = getChildAt(i);
             child.setEnabled(enabled);
         }
     }
 
-    public void setOnCompleteListener(CodeEditText.Listener listener){
+    public void setOnCompleteListener(Listener listener)
+    {
         this.listener = listener;
     }
 
     @Override
 
-    public LayoutParams generateLayoutParams(AttributeSet attrs) {
+    public LayoutParams generateLayoutParams(AttributeSet attrs)
+    {
         return new LinearLayout.LayoutParams(getContext(), attrs);
     }
 
 
-
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
+    {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         int parentWidth = getLayoutParams().width;
-        if (parentWidth == LayoutParams.MATCH_PARENT) {
+        if (parentWidth == LayoutParams.MATCH_PARENT)
+        {
             parentWidth = getScreenWidth();
         }
         Log.d(getClass().getName(), "onMeasure width " + parentWidth);
 
         int count = getChildCount();
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < count; i++)
+        {
             View child = getChildAt(i);
             this.measureChild(child, widthMeasureSpec, heightMeasureSpec);
         }
-        if (count > 0) {
+        if (count > 0)
+        {
             View child = getChildAt(0);
             int cWidth = child.getMeasuredWidth();
-            if (parentWidth != LayoutParams.WRAP_CONTENT) {
+            if (parentWidth != LayoutParams.WRAP_CONTENT)
+            {
                 // 重新计算padding
                 childHPadding = (parentWidth - cWidth * count) / (count + 1);
             }
@@ -260,12 +302,10 @@ public class CodeEditText extends ViewGroup
         }
 
 
-
-
-
     }
 
-    private int getScreenWidth() {
+    private int getScreenWidth()
+    {
 
         Resources resources = this.getResources();
         DisplayMetrics dm = resources.getDisplayMetrics();
@@ -276,12 +316,14 @@ public class CodeEditText extends ViewGroup
     }
 
     @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        Log.d(getClass().getName(), "onLayout width = " +  getMeasuredWidth());
+    protected void onLayout(boolean changed, int l, int t, int r, int b)
+    {
+        Log.d(getClass().getName(), "onLayout width = " + getMeasuredWidth());
 
         int childCount = getChildCount();
 
-        for (int i = 0; i < childCount; i++) {
+        for (int i = 0; i < childCount; i++)
+        {
             View child = getChildAt(i);
 
             child.setVisibility(View.VISIBLE);
@@ -297,7 +339,8 @@ public class CodeEditText extends ViewGroup
 
     }
 
-    public interface Listener {
+    public interface Listener
+    {
         void onComplete(String content);
     }
 

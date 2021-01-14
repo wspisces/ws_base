@@ -235,6 +235,16 @@ public class SharePreferUtil {
         return getSharedPreferences().getBoolean(ISVERIFY, false);
     }
 
+    public final static  String IS_PORTRAIT       = "isPortrait";
+    public static void saveScreenOrientation(boolean isPortrait)
+    {
+        getEditor().putBoolean(IS_PORTRAIT, isPortrait).commit();
+    }
+
+    public static boolean getScreenOrientation()
+    {
+        return getSharedPreferences().getBoolean(IS_PORTRAIT, false);
+    }
 
     //清理缓存数据
     public static void ClearCache() {
