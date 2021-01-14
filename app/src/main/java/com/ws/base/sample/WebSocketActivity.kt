@@ -2,7 +2,8 @@ package com.ws.base.sample
 
 import android.os.Bundle
 import android.view.View
-import butterknife.ButterKnife
+import android.widget.EditText
+import android.widget.TextView
 import butterknife.OnClick
 import com.ws.sample.R
 import com.ws.support.base.activity.BaseActivity
@@ -11,7 +12,6 @@ import com.ws.support.http.socket.WsManager
 import com.ws.support.http.socket.WsStatus
 import com.ws.support.utils.StringUtils
 import com.ws.support.utils.ToastUtils
-import kotlinx.android.synthetic.main.activity_web_socket.*
 import okhttp3.OkHttpClient
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -19,8 +19,12 @@ import java.util.concurrent.TimeUnit
 
 class WebSocketActivity : BaseActivity() {
     var wsManager: WsManager? = null
+    lateinit var tv: TextView
+    lateinit var et: EditText
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        tv = findViewById(R.id.tv)
+        et = findViewById(R.id.et)
         wsManager = WsManager.Builder(baseContext).client(
                 OkHttpClient().newBuilder()
                         .pingInterval(10, TimeUnit.SECONDS) // 设置 PING 帧发送间隔
@@ -36,7 +40,7 @@ class WebSocketActivity : BaseActivity() {
     }
 
     override fun initData() {
-        ButterKnife.bind(this)
+
     }
 
 
@@ -66,7 +70,7 @@ class WebSocketActivity : BaseActivity() {
                 if (StringUtils.isNotEmptyWithNull(event.content)) {
                     tv.append(event.content)
                     tv.append("\n")
-                }else{
+                } else {
                     tv.append("已连接\n")
                 }
             }

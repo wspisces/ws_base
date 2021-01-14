@@ -20,7 +20,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import com.ws.base.R;
-import com.ws.support.base.BaseApplication;
 import com.ws.support.network.NetType;
 import com.ws.support.network.Network;
 import com.ws.support.network.NetworkManager;

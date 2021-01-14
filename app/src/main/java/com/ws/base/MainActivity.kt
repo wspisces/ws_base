@@ -18,8 +18,11 @@ class MainActivity : BaseActivity() {
         var tv = findViewById<TextView>(R.id.tv);
         tv.append("分辨率="+ScreenUtils.getScreenWidth(this).toString())
         tv.append(" "+ScreenUtils.getScreenHeight(this)+"\n");
+        tv.append(" 屏幕密度="+ScreenUtils.getScreenDensity(this)+"\n");
         tv.append("屏幕尺寸="+ScreenUtils.getPingMuSize(this));
         tv.append("\n屏幕DPI="+ScreenUtils.getDPI(this));
+        tv.append("\n屏幕宽度DP="+ScreenUtils.getScreenWidth(this)/ScreenUtils.getScreenDensity(this));
+
     }
 
 

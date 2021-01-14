@@ -1,4 +1,9 @@
-apply plugin: 'com.android.library'
+plugins {
+    id 'com.android.library'
+}
+static def releaseTime() {
+    return new Date().format("yyyy_MM_dd_HH_mm", TimeZone.getTimeZone("GMT+8"))
+}
 android {
     compileSdkVersion var.compileSdkVersion
 
@@ -9,9 +14,9 @@ android {
         versionName "1.0.1"
         consumerProguardFiles "consumer-rules.pro"
     }
-    viewBinding.enabled = true
-    dataBinding {
-        enabled = true
+    buildFeatures{
+        viewBinding = true
+        dataBinding = true
     }
     buildTypes {
         release {
@@ -31,6 +36,19 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    /*
+    ${variant.productFlavors[0].name} 当前渠道名
+    ${variant.productFlavors[0].versionName} 当前版本名
+    ${releaseTime()} 当前时间
+*/
+/*    android.applicationVariants.all {
+        variant ->
+            variant.outputs.all {
+                //这里修改apk文件名
+                outputFileName = "园丁视力_${variant.name}_v${variant.versionName}_${releaseTime()}.apk"
+            }
+    }*/
 }
 
 dependencies {

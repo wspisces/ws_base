@@ -5,8 +5,6 @@ import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
 import com.orhanobut.logger.PrettyFormatStrategy;
 import com.ws.support.base.BaseApplication;
-import com.ws.support.http.HttpHelper;
-import com.ws.support.xutil.DbUtils;
 
 
 /**

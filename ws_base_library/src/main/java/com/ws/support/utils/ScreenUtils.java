@@ -79,6 +79,20 @@ public class ScreenUtils
 	}
 
 	/**
+	 * 获得屏幕宽度
+	 *
+	 * @param context
+	 * @return
+	 */
+	public static float getScreenDensity(Context context)
+	{
+		WindowManager wm = (WindowManager) context
+				.getSystemService(Context.WINDOW_SERVICE);
+		DisplayMetrics outMetrics = new DisplayMetrics();
+		wm.getDefaultDisplay().getMetrics(outMetrics);
+		return outMetrics.density;
+	}
+	/**
 	 * 获取当前屏幕截图，包含状态栏
 	 * 
 	 * @param activity
